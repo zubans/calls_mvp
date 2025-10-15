@@ -1,0 +1,41 @@
+# SourceCraft deployment configuration
+service:
+  name: video-call-server
+  description: Расширенный сервер для видеозвонков на Go с поддержкой WebRTC
+  type: web
+  runtime: go
+  version: 1.19
+
+build:
+  commands:
+    - go mod download
+    - go build -o bin/video-call-server .
+
+deploy:
+  port: 8080
+  environment:
+    - PORT=8080
+  health_check:
+    path: /health
+    interval: 30
+    timeout: 5
+  volumes:
+    - name: recordings
+      path: /root/recordings
+
+scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 70
+
+network:
+  ports:
+    - 8080/tcp
+
+resources:
+  memory: 512Mi
+  cpu: 250m
+
+monitoring:
+  metrics_path: /metrics
+  metrics_port: 8080

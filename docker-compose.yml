@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  video-call-server:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    volumes:
+      - .:/app
+      - recordings:/app/recordings
+    restart: unless-stopped
+
+volumes:
+  recordings:
