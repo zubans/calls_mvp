@@ -13,8 +13,6 @@
 
 # Dependency directories
 vendor/
-go.mod
-go.sum
 
 # IDE-specific files
 .vscode/
